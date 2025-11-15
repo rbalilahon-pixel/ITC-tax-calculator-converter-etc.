@@ -1,19 +1,195 @@
-Write a Javascript Program to Add,Delete employees in a payroll list.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payroll Management</title>
 
-1. The payroll program should input the following:
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #28313B, #485461);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        font-family: Arial, sans-serif;
+        color: white;
+        padding-top: 40px;
+    }
 
-Employee Name         Days Worked          Daily Rate      Deduction Amount
+    .container {
+        width: 90%;
+        max-width: 900px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-2. During Addition, the program should display the following in a table:
+    h2 {
+        text-align: center;
+        margin-top: 0;
+    }
 
-No.    Employee Name      Days Worked      Daily Rate      Gross Pay     Deduction Amount    Net Pay
+    input {
+        width: 22%;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        margin: 5px 5px;
+        font-size: 14px;
+    }
 
-where:
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background: #ffcf40;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+    }
 
-          No. = is the Payroll List Line number
+    button:hover {
+        background: #ffb300;
+    }
 
-          Gross Pay = Days Worked * Daily Rate
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(5px);
+        border-radius: 10px;
+        overflow: hidden;
+    }
 
-           Net Pay = Gross Pay - Deduction Amount
+    th, td {
+        border: 1px solid rgba(255,255,255,0.3);
+        padding: 10px;
+        text-align: center;
+    }
 
- 3. During Deletion, the program should ask for the Line Number to delete and update the table
+    th {
+        background: rgba(0,0,0,0.3);
+    }
+
+    .deleteBox {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .deleteBox input {
+        width: 120px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Payroll Management System</h2>
+
+    <!-- Input Fields -->
+    <div>
+        <input type="text" id="empName" placeholder="Employee Name">
+        <input type="number" id="daysWorked" placeholder="Days Worked">
+        <input type="number" id="dailyRate" placeholder="Daily Rate">
+        <input type="number" id="deduction" placeholder="Deduction Amount">
+
+        <button onclick="addEmployee()">Add Employee</button>
+    </div>
+
+    <!-- Payroll Table -->
+    <table id="payrollTable">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Employee Name</th>
+                <th>Days Worked</th>
+                <th>Daily Rate</th>
+                <th>Gross Pay</th>
+                <th>Deduction</th>
+                <th>Net Pay</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Delete Box -->
+    <div class="deleteBox">
+        <input type="number" id="deleteLine" placeholder="Line Number">
+        <button onclick="deleteEmployee()">Delete</button>
+    </div>
+</div>
+
+<script>
+let payrollList = [];
+
+function addEmployee() {
+    let name = document.getElementById("empName").value;
+    let days = parseInt(document.getElementById("daysWorked").value);
+    let rate = parseFloat(document.getElementById("dailyRate").value);
+    let deduct = parseFloat(document.getElementById("deduction").value);
+
+    // Input validation
+    if (!name || isNaN(days) || isNaN(rate) || isNaN(deduct)) {
+        alert("Please fill out all fields correctly.");
+        return;
+    }
+
+    let gross = days * rate;
+    let net = gross - deduct;
+
+    // Add to array
+    payrollList.push({
+        name: name,
+        days: days,
+        rate: rate,
+        gross: gross,
+        deduct: deduct,
+        net: net
+    });
+
+    updateTable();
+}
+
+function updateTable() {
+    let tbody = document.querySelector("#payrollTable tbody");
+    tbody.innerHTML = "";
+
+    // Refresh table
+    payrollList.forEach((emp, index) => {
+        let row = `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${emp.name}</td>
+                <td>${emp.days}</td>
+                <td>${emp.rate.toFixed(2)}</td>
+                <td>${emp.gross.toFixed(2)}</td>
+                <td>${emp.deduct.toFixed(2)}</td>
+                <td>${emp.net.toFixed(2)}</td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+}
+
+function deleteEmployee() {
+    let line = parseInt(document.getElementById("deleteLine").value);
+
+    if (isNaN(line) || line < 1 || line > payrollList.length) {
+        alert("Invalid line number.");
+        return;
+    }
+
+    // Remove element
+    payrollList.splice(line - 1, 1);
+
+    updateTable();
+}
+</script>
+
+</body>
+</html>
