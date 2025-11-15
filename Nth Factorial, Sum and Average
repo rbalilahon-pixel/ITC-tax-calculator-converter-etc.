@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loop Calculator</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+
+    .box {
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        width: 380px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+        margin-top: 0;
+        font-size: 28px;
+        text-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    }
+
+    input {
+        width: 85%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 15px;
+        font-size: 17px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        background: #ffdd57;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #ffc800;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 20px;
+        line-height: 1.6;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Loop Calculator</h2>
+
+    <input type="number" id="num" placeholder="Enter an integer value">
+
+    <button onclick="compute()">Compute</button>
+
+    <div id="output"></div>
+</div>
+
+<script>
+function compute() {
+    let n = parseInt(document.getElementById("num").value);
+
+    if (isNaN(n) || n < 0) {
+        document.getElementById("output").innerHTML = "Please enter a valid positive integer.";
+        return;
+    }
+
+    // 1. Factorial using While Loop
+    let fact = 1;
+    let i = 1;
+    while (i <= n) {
+        fact *= i;
+        i++;
+    }
+
+    // 2. Sum using Do While Loop
+    let sum = 0;
+    let j = 1;
+    if (n > 0) {
+        do {
+            sum += j;
+            j++;
+        } while (j <= n);
+    }
+
+    // 3. Average using For Loop
+    let avg = 0;
+    for (let k = 1; k <= n; k++) {
+        avg += k;
+    }
+    avg = avg / n;
+
+    // display results
+    document.getElementById("output").innerHTML =
+        "Factorial (" + n + "!) = " + fact.toLocaleString() + "<br>" +
+        "Sum of first " + n + " numbers = " + sum + "<br>" +
+        "Average of first " + n + " numbers = " + avg.toFixed(2);
+}
+</script>
+
+</body>
+</html>
