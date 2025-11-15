@@ -1,0 +1,19 @@
+Write a Javascript Program to Add,Delete employees in a payroll list.
+
+1. The payroll program should input the following:
+
+Employee Name         Days Worked          Daily Rate      Deduction Amount
+
+2. During Addition, the program should display the following in a table:
+
+No.    Employee Name      Days Worked      Daily Rate      Gross Pay     Deduction Amount    Net Pay
+
+where:
+
+          No. = is the Payroll List Line number
+
+          Gross Pay = Days Worked * Daily Rate
+
+           Net Pay = Gross Pay - Deduction Amount
+
+ 3. During Deletion, the program should ask for the Line Number to delete and update the table
